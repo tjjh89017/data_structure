@@ -20,9 +20,9 @@ static int mylist_del(mylist *list)
 	return 0;
 }
 
-mystack* mystack_new(int size = DEFAULT_SIZE)
+mystack* mystack_new(int size)
 {
-	mystack *s = malloc(sizeof(mysatck));
+	mystack *s = malloc(sizeof(mystack));
 
 	s->length = 0;
 	s->size = size;
