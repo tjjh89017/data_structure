@@ -6,6 +6,7 @@
 int main(){
 
 	mystack *s = mystack_new(DEFAULT_SIZE);
+
 	int i = 0;
 	for(i = 0; i < 100; i++)
 		mystack_push(s, i);
