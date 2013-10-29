@@ -12,7 +12,7 @@ static mylist* mylist_new(int size)
 	return list;
 }
 
-static int mylist_del(mylist *list)
+static int mylist_free(mylist *list)
 {
 	free(list->value);
 	free(list);
@@ -60,7 +60,7 @@ void* mystack_pop(mystack *s)
 
 	if(pos == 0){
 		s->head = list->next;
-		mylist_del(list);
+		mylist_free(list);
 	}
 
 	return rtn;
@@ -80,4 +80,24 @@ void* mystack_top(mystack *s)
 int mystack_empty(mystack *s)
 {
 	return s->length == 0;
+}
+
+int mystack_flush(mystack *s)
+{
+	mylist *list;
+	while(s->head != NULL){
+		list = s->head;
+		s->head = s->head->next;
+		mylist_free(list);
+	}
+
+	return 0;
+}
+
+int mystack_free(mystack *s)
+{
+	mystack_flush(s);
+	free(s);
+
+	return 0;
 }
