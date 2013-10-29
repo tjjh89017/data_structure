@@ -8,6 +8,8 @@
 char* infix_to_posfix(char *expr);
 int combine_rule(char a, char b);
 int priority(char a);
+int eval_operator(int a, int b, int op);
+int eval_posfix(char *expr);
 
 int main(){
 
@@ -16,6 +18,7 @@ int main(){
 
 	char *postfix = infix_to_posfix(expr);
 	printf("%s\n", postfix);
+	printf("ans:%d\n", eval_posfix(postfix));
 
 	return 0;
 }
@@ -60,6 +63,7 @@ char* infix_to_posfix(char *expr)
 		ptr++;
 	}
 
+	mystack_free(s);
 	return postfix;
 }
 
@@ -94,4 +98,43 @@ int priority(char a)
 		case '(':
 			return 0;
 	}
+}
+
+int eval_operator(int a, int b, int op)
+{
+	switch(op){
+		case '*':
+			return a * b;
+		case '/':
+			return a / b;
+		case '+':
+			return a + b;
+		case '-':
+			return a - b;
+	}
+}
+
+int eval_posfix(char *expr)
+{
+	int ans = 0;
+	int len = strlen(expr);
+	mystack *s = mystack_new(MYSTACK_DEFAULT);
+
+	int i = 0;
+	for(i = 0; i < len; i++){
+		/* operand push them */
+		if('0' <= expr[i] && expr[i] <= '9')
+			mystack_push(s, expr[i] - '0');
+		/* operand pop two operand and eval them */
+		else{
+			/* I think I should check if stack has two elemnets */
+			int b = mystack_pop(s);
+			int a = mystack_pop(s);
+			mystack_push(s, eval_operator(a, b, expr[i]));
+		}
+	}
+	ans = mystack_pop(s);
+	mystack_free(s);
+
+	return ans;
 }
