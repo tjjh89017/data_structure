@@ -10,3 +10,13 @@ mybtree* mybtree_new(void *value)
 
 	return tree;
 }
+
+int mybtree_free(mybtree *root)
+{
+	if(root == NULL)
+		return 0;
+	mybtree_free(root->left);
+	mybtree_free(root->right);
+
+	return 0;
+}

@@ -35,6 +35,7 @@ int main(int argc, char* argv[]){
 	inorder_travel_stack(root);
 	printf("\n");
 
+	mybtree_free(root);
 	return 0;
 }
 

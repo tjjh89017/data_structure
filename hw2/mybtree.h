@@ -9,5 +9,6 @@ typedef struct _mybtree{
 }mybtree;
 
 mybtree* mybtree_new(void *value);
+int mybtree_free(mybtree *root);
 
 #endif
