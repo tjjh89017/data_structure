@@ -17,4 +17,7 @@
 *.out
 *.app
 
+# vim
+*.swp
+
 main
