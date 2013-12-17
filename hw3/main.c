@@ -17,6 +17,17 @@ typedef struct{
 
 int compare(void *a, void *b);
 mybtree* huffman_tree(frequency **f, int len, int (*compare_fun)(void*, void*));
+char* huffman_encode(mybtree *huff, char *s, int len);
+
+void re(mybtree *huff)
+{
+	if(huff->left == NULL && huff->right == NULL){
+		printf("%c\n", *(char*)((frequency*)huff->value)->symbol);
+		return;
+	}
+	re(huff->left);
+	re(huff->right);
+}
 
 int main(){
 
@@ -34,7 +45,7 @@ int main(){
 	}
 
 	mybtree *huffman = huffman_tree(f, len, compare);
-
+	re(huffman);
 	return 0;
 }
 
@@ -66,7 +77,7 @@ mybtree* huffman_tree(frequency **f, int len, int (*compare_fun)(void*, void*))
 
 	// get min 2 value and create a tree
 	// left 0, right 1, and right smaller than left
-	mybtree *root;
+	mybtree *root = heap[0];
 	frequency *fre;
 	son = 1;
 	parent = 0;
@@ -97,11 +108,19 @@ mybtree* huffman_tree(frequency **f, int len, int (*compare_fun)(void*, void*))
 				parent = son;
 				son = parent * 2 + 1;
 			}
-
 		}
+
 		heap[len] = root;
 		len++;
+		son = len - 1;
+		parent = (son - 1) / 2;
+		while(parent >= 0 && compare_fun(heap[son]->value, heap[parent]->value) < 0){
+			SWAP(heap[son], heap[parent], temp);
+			son = parent;
+			parent = (son - 1) / 2;
+		}
 	}
+	root = heap[0];
 	free(heap);
 
 	return root;
