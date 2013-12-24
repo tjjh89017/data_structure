@@ -43,7 +43,7 @@ void myheapsort(void *array_base, int len, int size, int (*cmp)(const void*, con
 	p_ptr = &array[parent * size];
 	s_ptr = &array[son * size];
 	while(len > 0){
-		SWAP(s_ptr, p_ptr, size);
+		SWAP(&array[0], &array[(len - 1) * size], size);
 		len--;
 		parent = 0;
 		son = parent * 2 + 1;

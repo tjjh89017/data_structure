@@ -9,7 +9,7 @@ int compare(const void *a, const void *b)
 }
 
 int main(){
-	int a[] = {1000, 100, 10, 1};
+	int a[] = {1000, 100, 10, 1, 2, 20, 200, 2000};
 	int len = sizeof(a) / sizeof(int);
 
 	myheapsort(a, len, sizeof(int), compare);
