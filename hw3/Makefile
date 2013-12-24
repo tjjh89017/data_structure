@@ -8,13 +8,15 @@ CFLAGS = -Os -Wextra \
 OBJS = mybtree.o \
 	main.o
 
+LDFLAGS = -lm
+
 .c.o:
-	$(CC) $(CFLAGS) -c $*.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $*.c
 
 all: $(PROG)
 
 $(PROG): $(OBJS)
-	$(CC) -o $(PROG) $(CFLAGS) $(OBJS)
+	$(CC) -o $(PROG) $(CFLAGS) $(LDFLAGS) $(OBJS)
 
 clean:
 	rm -f $(PROG) $(OBJS)
