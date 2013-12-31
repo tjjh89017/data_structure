@@ -40,13 +40,6 @@ int main(){
 	cost = clock();
 	mybubblesort(data, len, sizeof(int), compare);
 	cost = clock() - cost;
-
-	for(i = 1; i < len; i++){
-		if(data[i - 1] > data[i]){
-			printf("Error\n");
-			break;
-		}
-	}
 	
 	fp = fopen("n2ouput.txt", "w");
 	for(i = 0; i < len; i++){
