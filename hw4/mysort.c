@@ -64,3 +64,15 @@ void myheapsort(void *array_base, int len, int size, int (*cmp)(const void*, con
 		}
 	}
 }
+
+void mybubblesort(void *array_base, int len, int size, int (*cmp)(const void*, const void*))
+{
+	char *array = (char*)array_base;
+	int i = 0, j = 0;
+	for(i = len; i > 0; i--){
+		for(j = 0; j < i - 1; j++){
+			if((*cmp)((void*)&array[j * size], (void*)&array[(j + 1) * size]) > 0)
+				SWAP(&array[j * size], &array[(j + 1) * size], size);
+		}
+	}
+}
