@@ -5,10 +5,10 @@
 
 #define SWAP(a, b, size) \
 { \
-	if(size == sizeof(long)){ \
-		long _tmp = *(a); \
-		*(a) = *(b); \
-		*(b) = _tmp; \
+	if((size) == sizeof(long)){ \
+		long _tmp = *(long*)(a); \
+		*(long*)(a) = *(long*)(b); \
+		*(long*)(b) = _tmp; \
 	} \
 	else{ \
 		long _size = (size); \
