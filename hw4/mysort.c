@@ -5,13 +5,20 @@
 
 #define SWAP(a, b, size) \
 { \
-	int _size = (size); \
-	char *_a = (a), *_b = (b); \
-	char _tmp; \
-	while(_size--){ \
-		_tmp = *_a; \
-		*_a++ = *_b; \
-		*_b++ = _tmp; \
+	if(size == sizeof(long)){ \
+		long _tmp = *(a); \
+		*(a) = *(b); \
+		*(b) = _tmp; \
+	} \
+	else{ \
+		long _size = (size); \
+		char *_a = (a), *_b = (b); \
+		char _tmp; \
+		while(_size--){ \
+			_tmp = *_a; \
+			*_a++ = *_b; \
+			*_b++ = _tmp; \
+		} \
 	} \
 }
 
