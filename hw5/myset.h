@@ -12,8 +12,11 @@ typedef struct _list
 
 typedef struct
 {
+	// buckets size
 	int size;
 	mylist **buckets;
+	// item len
+	int len;
 	int (*cmp)(const void*, const void*);
 	int (*hash)(const void*);
 }myset;
@@ -26,6 +29,7 @@ void myset_add(myset *s, void *data);
 void myset_add_set(myset *s, myset *d);
 void myset_del(myset *s, void *data);
 int myset_find(myset *s, void *data);
+int myset_length(myset *s);
 void myset_clear(myset *s);
 void myset_free(myset *s);
 

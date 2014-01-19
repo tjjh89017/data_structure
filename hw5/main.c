@@ -12,7 +12,7 @@ typedef struct
 
 int edge_cmp(const void *a, const void *b)
 {
-	return ((edge*)a)->weight - ((edge*)b)->weight;
+	return (*(edge**)a)->weight - (*(edge**)b)->weight;
 }
 
 int hash(const void *a)
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
 		path = argv[1];
 
 	int weight = 0;
-	char vertax[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char vertex[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	FILE *file = fopen(path, "r");
 	int num = 0;
 	fscanf(file, "Number of vectors: %d", &num);
@@ -41,8 +41,8 @@ int main(int argc, char *argv[]){
 	es[0] = (edge*)malloc(sizeof(edge));
 	edge *e = es[0];
 	int i = 0;
-	// " (%c,%c)%*c[%d]" the space is a special skill to ignore invisible character
-	while(fscanf(file, " (%c,%c)%*c[%d]", &e->start, &e->end, &e->weight) != EOF){
+	// " (%c,%c) [%d]" the space is a special skill to ignore invisible character
+	while(fscanf(file, " (%c,%c) [%d]", &e->start, &e->end, &e->weight) != EOF){
 		i++;
 		es[i] = (edge*)malloc(sizeof(edge));
 		e = es[i];
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 	myset **ss = (myset**)malloc(sizeof(myset*) * num);
 	for(i = 0; i < num; i++){
 		ss[i] = myset_new(num, cmp, hash);
-		myset_add(ss[i], &vertax[i]);
+		myset_add(ss[i], &vertex[i]);
 	}
 
 	int slen = num;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
 	for(i = 0; i < elen; i++){
 		e = es[i];
 		int spos = num, epos = num;
-		// find vertax in which set
+		// find vertex in which set
 		for(j = 0; j < num; j++){
 			if(ss[j] == NULL)
 				continue;
@@ -80,6 +80,8 @@ int main(int argc, char *argv[]){
 			weight += e->weight;
 			slen--;
 		}
+		if(myset_length(ss[spos]) == num)
+			break;
 	}
 
 	if(slen == 1)

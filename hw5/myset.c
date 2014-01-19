@@ -24,6 +24,7 @@ myset* myset_new(int size, int (*cmp)(const void*, const void*), int (*hash)(con
 	memset(s->buckets, 0, sizeof(mylist*) * size);
 	s->cmp = cmp;
 	s->hash = hash;
+	s->len = 0;
 
 	return s;
 }
@@ -35,6 +36,7 @@ void myset_add(myset *s, void *data)
 		mylist *l = mylist_new(data);
 		l->next = s->buckets[pos];
 		s->buckets[pos] = l;
+		s->len++;
 	}
 }
 
@@ -63,6 +65,7 @@ void myset_del(myset *s, void *data)
 			dl = *cl;
 			*cl = (*cl)->next;
 			mylist_free(dl);
+			s->len--;
 			break;
 		}
 		cl = &(*cl)->next;
@@ -83,6 +86,11 @@ int myset_find(myset *s, void *data)
 	return 0;
 }
 
+int myset_length(myset *s)
+{
+	return s->len;
+}
+
 void myset_clear(myset *s)
 {
 	mylist **cl, *dl;
@@ -96,6 +104,7 @@ void myset_clear(myset *s)
 			mylist_free(dl);
 		}
 	}
+	s->len = 0;
 }
 
 void myset_free(myset *s)
